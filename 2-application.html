@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — 1:1 Metabolic Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#1F2E22;
+    --forest-deep:#141F17;
+    --bone:#F3EEE3;
+    --bone-dim:#E9E1D0;
+    --rust:#C1613B;
+    --sage:#8CA382;
+    --gold:#C9A227;
+    --ink:#14201A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:linear-gradient(180deg,#EFE6CE 0%,var(--bone) 30%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  .label{
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .topbar{padding:22px 0;border-bottom:1px solid rgba(20,32,26,0.1);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:19px;letter-spacing:-0.01em;display:flex;align-items:center;gap:10px;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--rust);}
+  .topbar .label{color:var(--forest);opacity:0.65;}
+
+  /* progress */
+  .progress-row{padding:34px 0 0;}
+  .progress-track{
+    display:flex;align-items:center;gap:0;
+  }
+  .p-seg{flex:1;height:2px;background:rgba(20,32,26,0.12);position:relative;}
+  .p-seg.done{background:var(--rust);}
+  .p-dot{
+    width:9px;height:9px;border-radius:50%;
+    background:rgba(20,32,26,0.15);
+    flex-shrink:0;
+  }
+  .p-dot.done{background:var(--rust);}
+  .progress-labels{display:flex;justify-content:space-between;margin-top:10px;}
+  .progress-labels span{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:rgba(20,32,26,0.4);}
+  .progress-labels span.active{color:var(--rust);}
+
+  .main-grid{
+    padding:46px 0 90px;
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+  }
+
+  /* left rail */
+  .rail .label{color:var(--rust);}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:450;
+    font-size:clamp(30px,3.4vw,40px);
+    line-height:1.08;
+    letter-spacing:-0.015em;
+    color:var(--forest-deep);
+    margin-top:16px;
+  }
+  h1 em{font-style:italic;font-weight:600;color:var(--rust);}
+  .rail p.desc{
+    margin-top:18px;
+    font-size:15.5px;
+    color:rgba(20,32,26,0.68);
+    max-width:400px;
+  }
+
+  .rail-photo{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    border-radius:4px;
+    margin-top:28px;
+    border-left:4px solid var(--gold);
+  }
+
+  .criteria-box{
+    margin-top:28px;
+    border-top:1px solid rgba(20,32,26,0.14);
+    padding-top:22px;
+  }
+  .criteria-box .label{color:var(--forest);opacity:0.6;margin-bottom:14px;display:block;}
+  .criteria-item{
+    display:flex;
+    gap:12px;
+    padding:11px 0;
+    border-bottom:1px solid rgba(20,32,26,0.08);
+    font-size:14px;
+    color:rgba(20,32,26,0.78);
+  }
+  .criteria-item:last-child{border-bottom:none;}
+  .criteria-item .mark{
+    color:var(--sage);
+    font-family:'Space Mono',monospace;
+    flex-shrink:0;
+  }
+
+  .quote-block{
+    margin-top:34px;
+    padding:20px 22px;
+    background:var(--forest-deep);
+    border-radius:4px;
+  }
+  .quote-block p{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--bone);
+    line-height:1.55;
+  }
+  .quote-block cite{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-style:normal;
+    font-size:12px;
+    color:rgba(243,238,227,0.5);
+    margin-top:10px;
+  }
+
+  /* form card */
+  .form-card{
+    background:#ffffff;
+    border:1px solid rgba(20,32,26,0.1);
+    border-radius:4px;
+    padding:38px 38px 32px;
+  }
+  .form-card .label{color:var(--rust);display:block;margin-bottom:6px;}
+  .form-card h2{
+    font-family:'Fraunces',serif;
+    font-weight:450;
+    font-size:23px;
+    color:var(--forest-deep);
+    margin-bottom:26px;
+  }
+  fieldset{border:none;margin-bottom:22px;}
+  .field-label{
+    display:block;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  .field-label .req{color:var(--rust);}
+  input[type="text"],input[type="email"],input[type="tel"],select,textarea{
+    width:100%;
+    background:var(--bone);
+    border:1px solid rgba(20,32,26,0.16);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    padding:12px 14px;
+    border-radius:3px;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  textarea{resize:vertical;min-height:90px;}
+  input:focus,select:focus,textarea:focus{border-color:var(--rust);}
+  ::placeholder{color:rgba(20,32,26,0.35);}
+
+  .radio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .radio-opt{
+    border:1px solid rgba(20,32,26,0.16);
+    border-radius:3px;
+    padding:11px 13px;
+    font-size:13.5px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .radio-opt:hover{border-color:var(--rust);}
+  .radio-opt input{width:auto;}
+
+  button.cta{
+    width:100%;
+    margin-top:8px;
+    background:var(--rust);
+    color:var(--bone);
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    padding:16px 18px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:transform .12s ease,background .15s ease;
+  }
+  button.cta:hover{background:#A94F2E;transform:translateY(-1px);}
+  button.cta:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .form-fine{
+    font-size:12px;
+    color:rgba(20,32,26,0.45);
+    margin-top:14px;
+    text-align:center;
+  }
+
+  footer{
+    padding:30px 0 40px;
+    text-align:center;
+    color:rgba(20,32,26,0.4);
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    border-top:1px solid rgba(20,32,26,0.08);
+  }
+
+  @media (max-width:900px){
+    .main-grid{grid-template-columns:1fr;gap:36px;}
+    .radio-grid{grid-template-columns:1fr;}
+    .form-card{padding:28px 22px 26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>Root &amp; Reset Nutrition</div>
+    <div class="label">Application · Step 2 of 3</div>
+  </div>
+</div>
+
+<div class="wrap main-grid" style="padding-top:40px;">
+  <div class="rail">
+    <span class="label">1:1 Coaching Application</span>
+    <h1>A few questions before we <em>talk metabolism.</em></h1>
+    <p class="desc">This program is built for a specific kind of client — not everyone who wants faster results is ready for this level of support yet. This application helps us confirm it's a fit before you book a call.</p>
+
+    <img class="rail-photo" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=700&q=80" alt="Fresh ingredients laid out for meal prep">
+
+    <div class="criteria-box">
+      <span class="label">This is likely a fit if</span>
+      <div class="criteria-item"><span class="mark" style="color:var(--sage);">→</span> You've tried 2+ diets and want something that actually holds long-term.</div>
+      <div class="criteria-item"><span class="mark" style="color:var(--gold);">→</span> You can commit 15 minutes a day to meal prep, not 90.</div>
+      <div class="criteria-item"><span class="mark" style="color:var(--rust);">→</span> You're ready to work with a coach, not just a PDF.</div>
+    </div>
+
+    <div class="quote-block">
+      <p>"The application felt more like a check-in than a hoop to jump through. I actually felt heard before we'd even spoken."</p>
+      <cite>— Past applicant, now 4 months into coaching</cite>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <span class="label">Confidential</span>
+    <h2>Tell us where you're starting from</h2>
+
+    <form onsubmit="event.preventDefault(); window.location.href='3-booking.html';">
+      <fieldset>
+        <label class="field-label">Full name <span class="req">*</span></label>
+        <input type="text" placeholder="Your name" required>
+      </fieldset>
+
+      <fieldset>
+        <label class="field-label">Email address <span class="req">*</span></label>
+        <input type="email" placeholder="you@email.com" required>
+      </fieldset>
+
+      <fieldset>
+        <label class="field-label">Phone number <span class="req">*</span></label>
+        <input type="tel" placeholder="For call confirmation only" required>
+      </fieldset>
+
+      <fieldset>
+        <label class="field-label">What's the biggest reason past attempts haven't stuck? <span class="req">*</span></label>
+        <textarea placeholder="A couple of sentences is plenty." required></textarea>
+      </fieldset>
+
+      <fieldset>
+        <label class="field-label">How soon do you want to start? <span class="req">*</span></label>
+        <div class="radio-grid">
+          <label class="radio-opt"><input type="radio" name="timeline" required> Immediately</label>
+          <label class="radio-opt"><input type="radio" name="timeline"> Within 2 weeks</label>
+          <label class="radio-opt"><input type="radio" name="timeline"> Within a month</label>
+          <label class="radio-opt"><input type="radio" name="timeline"> Just exploring</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label class="field-label">Investment range you've budgeted for coaching <span class="req">*</span></label>
+        <select required>
+          <option value="" disabled selected>Select a range</option>
+          <option>Under $200/mo</option>
+          <option>$200–$400/mo</option>
+          <option>$400–$600/mo</option>
+          <option>Not sure yet — want to discuss on the call</option>
+        </select>
+      </fieldset>
+
+      <button type="submit" class="cta">Submit Application →</button>
+      <p class="form-fine">We review every application personally. If it's a fit, you'll be taken straight to the booking calendar.</p>
+    </form>
+  </div>
+</div>
+
+<footer>ROOT &amp; RESET NUTRITION — SAMPLE FUNNEL PAGE, BUILT FOR PORTFOLIO DEMONSTRATION</footer>
+
+</body>
+</html>
